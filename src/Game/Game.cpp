@@ -6,25 +6,26 @@
 
 using namespace std;
 
-void GameClass::run(){
+void GameClass::run(GameClass *game){
+
+	game->maze->setTerrain(game->maze, 0, 0, 1);	
 
 	cout << "Game Running ..." << endl;
 }
 
-GameClass::GameStatus GameClass::init(){
+GameClass::GameStatus GameClass::init(GameClass *game){
 
 	cout << "Game Init" << endl;
 
-	GameClass game;
-	Maze maze;
 	
-	if (maze.init()) return GameStatus::INIT_FAILURE;
+	if (game->maze->init(game->maze)) return GameStatus::INIT_FAILURE;
 
 	return GameStatus::INIT_SUCCESS;
 }
 
-void GameClass::deinit(){
+void GameClass::deinit(GameClass *game){
 
+	game->maze->deinit(game->maze);
 	cout << "Game Deinit" << endl;
 }
 

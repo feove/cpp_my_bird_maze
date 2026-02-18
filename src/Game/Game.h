@@ -1,9 +1,17 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../Maze/maze.h"
+
 class GameClass{
 
-	public: enum GameStatus {
+	private:
+	
+	public: 
+	
+	Maze *maze;
+	
+	enum GameStatus {
 		
 		INIT_FAILURE,
 		INIT_SUCCESS,
@@ -11,9 +19,12 @@ class GameClass{
 
 	}; 
 	
-	public: GameStatus init();
-	public: void deinit();
-	public: void run();
+ 
+	GameStatus init(GameClass *game);
+
+	void deinit(GameClass *game);
+
+	void run(GameClass *game);
 
 };
 
