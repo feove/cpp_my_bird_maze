@@ -3,8 +3,18 @@
 
 class GameClass{
 
-	public: void test();
+	public: enum GameStatus {
+		
+		INIT_FAILURE,
+		INIT_SUCCESS,
+		RUNNING
+
+	}; 
 	
+	public: GameStatus init();
+	public: void deinit();
+	public: void run();
+
 };
 
 class Test{

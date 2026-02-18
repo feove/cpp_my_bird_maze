@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Maze/maze.h"
 #include "Game/Game.h"
 
 using namespace std;
@@ -7,12 +8,26 @@ using namespace std;
 
 int main() {
 
-
 	GameClass game;
-	game.test();	 
-
+	Maze maze;
 	Test test;
-	test.test();
+	
+
+	if (game.init() == GameClass::INIT_FAILURE) {
+
+		cout << "Game Init Failure" << endl;
+		game.deinit();
+		exit(1);
+	}
+	
+	//loop
+	game.run();	 
+
+
+	game.deinit();
+
+
+//	test.test();
 
 //    std::cout << "Hello World\n";
 
