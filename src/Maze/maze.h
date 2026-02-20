@@ -9,7 +9,7 @@ class Maze{
 
 	public: 
 	
-	static const int MAZE_SIZE = 32;  
+	static const int MAZE_SIZE = 16;  
 
 	std::string terrain[MAZE_SIZE];
     

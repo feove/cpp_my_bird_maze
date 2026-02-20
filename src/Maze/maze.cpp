@@ -5,16 +5,33 @@
 #include "../Game/Game.h"
 
 using namespace std;
- 
+
+
+
+
 int Maze::init(Maze *maze){
 
 	std::cout << "--- Maze ---" << endl;
 
-	string wall = "---------------------";
+	string wall = "";
+	string object = "";
+	
 
-	for (int i = 0; i < MAZE_SIZE; i++) {
+	for (int j = 0; j < MAZE_SIZE/2; j++) {
+		
+		for (int i = 0; i < MAZE_SIZE; i++){
 
-		maze->terrain[i] = wall;
+			string border =  (j == 0 || j == MAZE_SIZE - 1) ? "=" : "-";
+
+			object = (i == 0) ? "[" : (i == MAZE_SIZE - 1) ? "]" : border;
+			
+				
+			wall.append(object);
+		}
+
+		maze->terrain[j] = wall;
+
+		wall = "";
 	}	
     
 	
@@ -47,7 +64,10 @@ void Maze::printTerrain(Maze *maze){
 
 	for (int i = 0; i < MAZE_SIZE; i++) {
 
+		if ( maze->terrain[i] != ""){
+			
 		cout << maze->terrain[i] << "\n";
+		}
 
 	}
 

@@ -8,7 +8,7 @@ using namespace std;
 
 void GameClass::run(GameClass *game){
 
-	game->maze->setTerrain(game->maze, 0, 0, "W");	
+	game->maze->setTerrain(game->maze, 2, 4, "W");	
 
 
 	
