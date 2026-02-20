@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include "maze.h"
 #include "../Game/Game.h"
@@ -7,11 +8,13 @@ using namespace std;
  
 int Maze::init(Maze *maze){
 
-	std::cout << "Maze Init" << endl;
+	std::cout << "--- Maze ---" << endl;
+
+	string wall = "---------------------";
 
 	for (int i = 0; i < MAZE_SIZE; i++) {
 
-		maze->terrain[i] = 2;
+		maze->terrain[i] = wall;
 	}	
     
 	
@@ -23,22 +26,28 @@ void Maze::deinit(Maze *maze){
 	cout << "Maze Deinit" << endl;
 }
 
-void Maze::setTerrain(Maze *maze, int x, int y, int value){
+void Maze::setTerrain(Maze *maze, int x, int y, const string& item){
 
-	
-	maze->terrain[x] = value;
-		
+    int size = maze->terrain[x].length();
+    
+    if (x >= 0 && x < MAZE_SIZE && y >= 0 && y < size) {
 
+        maze->terrain[x].replace(y, item.length(), item);
+        
+    }else{
+    
+    	cout << "Out of Band from string\n";
+    }
 }
-	
+
 
 void Maze::printTerrain(Maze *maze){
 
-	cout << "Maze Terrain: " << endl;
+//	cout << "Maze Terrain: " << endl;
 
 	for (int i = 0; i < MAZE_SIZE; i++) {
 
-		cout << maze->terrain[i] << " ";
+		cout << maze->terrain[i] << "\n";
 
 	}
 

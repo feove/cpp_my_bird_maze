@@ -6,16 +6,16 @@
 using namespace std;
 
 
-int main() {
+int main(void) {
+
 
 	GameClass *game = new GameClass();
 
 	
-	
 	game->maze = new Maze();
 	
 	Test test;
-	
+
 	
 	if (game->init(game) == GameClass::INIT_FAILURE) {
 

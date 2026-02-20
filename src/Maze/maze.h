@@ -3,16 +3,15 @@
 #define MAZE_H
 
 #include <cstddef>
+#include <string>
 
 class Maze{	
-
-	//public: Maze *maze;
 
 	public: 
 	
 	static const int MAZE_SIZE = 32;  
 
-	int terrain[MAZE_SIZE];  
+	std::string terrain[MAZE_SIZE];
     
 	int init(Maze *maze);
 
@@ -20,7 +19,7 @@ class Maze{
 
 	void printTerrain(Maze *maze);
 
-	void setTerrain(Maze *maze, int x, int y, int value);
+	void setTerrain(Maze *maze, int x, int y, const std::string& item);
 	
 };
 
