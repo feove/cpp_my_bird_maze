@@ -8,12 +8,11 @@ using namespace std;
 
 void GameClass::run(GameClass *game){
 
-	game->maze->setTerrain(game->maze, 2, 4, "W");	
+	game->maze->setTerrain(game->maze, 2, 4, "W");
 
 
-	
 	game->maze->setTerrain(game->maze, 5, 12, "W");
-		
+
 	cout << "Game Running ..." << endl;
 }
 
@@ -21,7 +20,7 @@ GameClass::GameStatus GameClass::init(GameClass *game){
 
 	cout << "Game Init" << endl;
 
-	
+
 	if (game->maze->init(game->maze)) return GameStatus::INIT_FAILURE;
 
 	return GameStatus::INIT_SUCCESS;
@@ -37,6 +36,5 @@ void GameClass::deinit(GameClass *game){
 void Test::test(){
 
 
-	std::cout << "Testing Only" << endl; 
+	std::cout << "Testing Only" << endl;
 }
-

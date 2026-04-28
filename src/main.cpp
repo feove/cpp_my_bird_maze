@@ -8,15 +8,12 @@ using namespace std;
 
 int main(void) {
 
-
 	GameClass *game = new GameClass();
 
-	
 	game->maze = new Maze();
-	
+
 	Test test;
 
-	
 	if (game->init(game) == GameClass::INIT_FAILURE) {
 
 		cout << "Game Init Failure" << endl;
@@ -24,16 +21,16 @@ int main(void) {
 		exit(1);
 	}
 
-	game->maze->printTerrain(game->maze);	
+	game->maze->printTerrain(game->maze);
 
 	//need loop
-	game->run(game);	 
+	game->run(game);
 
 
-	game->maze->printTerrain(game->maze);	
-	
+	game->maze->printTerrain(game->maze);
+
 	game->deinit(game);
-	
+
 
     return 0;
 }

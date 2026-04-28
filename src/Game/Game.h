@@ -6,20 +6,20 @@
 class GameClass{
 
 	private:
-	
-	public: 
-	
+
+	public:
+
 	Maze *maze;
-	
+
 	enum GameStatus {
-		
+
 		INIT_FAILURE,
 		INIT_SUCCESS,
 		RUNNING
 
-	}; 
-	
- 
+	};
+
+
 	GameStatus init(GameClass *game);
 
 	void deinit(GameClass *game);
@@ -31,7 +31,7 @@ class GameClass{
 class Test{
 
 	public: void test();
-	
+
 };
 
 #endif /* ! GAME_H */
