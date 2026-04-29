@@ -4,6 +4,7 @@
 
 #include "maze.h"
 #include "../Game/Game.h"
+#include "maze_unicode.h"
 
 using namespace std;
 
@@ -12,6 +13,12 @@ int Maze::init(Maze *maze){
 
 	std::cout << "--- Maze ---" << endl;
 
+
+
+
+
+
+	/*
 	string wall = "";
 	string object = "";
 
@@ -33,7 +40,7 @@ int Maze::init(Maze *maze){
 		wall = "";
 	}
 
-
+	*/
 	return 0;
 }
 

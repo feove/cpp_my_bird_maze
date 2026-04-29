@@ -10,7 +10,7 @@ int main(void) {
 
 	GameClass *game = new GameClass();
 
-	game->maze = new Maze();
+	game->maze = new Maze(0,0);
 
 	Test test;
 
