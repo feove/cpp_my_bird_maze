@@ -1,0 +1,21 @@
+
+█ ▓ ▒ ░   (Blocks - different densities)
+■ □ ▢ ▣   (Squares)
+▩ ◧ ◨ ◩ ◪ (Composite blocks)
+╶ ╴ ╷ ╵   (Line segments)
+─ │ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼   (Box drawing)
+═ ║ ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ ╬   (Double lines)
+
+◉ ◎ ◌ ○ ● ◯     (Circles - player/start/end)
+◆ ◇ ◈ ◉          (Diamonds)
+★ ☆ ✦ ✧          (Stars)
+♥ ♦ ♣ ♠          (Card suits)
+▪ ▫ ▬ ▭ ▮ ▯      (Various shapes)
+⟐ ⌑ ⎔            (Special geometric)
+⌂ ☐ ☒ ☓          (Checkbox styles)
+▙ ▛ ▜ ▟          (Quarter blocks)
+▖ ▗ ▘ ▝          (Corner blocks)
+
+↑ ↓ ← → ↖ ↗ ↘ ↙
+↺ ↻ ⇄ ⇅ ⇆ ⇇ ⇈ ⇉ ⇊
+➔ ➘ ➙ ➚ ➛ ➜ ➝ ➞ ➟ ➠ ➡
