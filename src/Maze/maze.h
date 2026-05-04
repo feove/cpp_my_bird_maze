@@ -4,30 +4,34 @@
 
 #include <cstddef>
 #include <string>
+#include <iostream>
+#include <memory>
+#include "cell.h"
+
+using namespace std;
 
 class Maze{
 
 	private:
-		static const int MAZE_SIZE = 15;
-		int cx;
+		int cx; //frontend purposes
 		int cy;
+
+		int width;
+		int height;
+
+		std::unique_ptr<Cell[]> terrain;
 
 	public:
 
-        Maze(int _cx, int _cy) {
-            cx = _cx;
-            cy = _cy;
-        }
+	Maze(int _cx, int _cy, int width = 32, int height = 16);
 
-		std::string terrain[MAZE_SIZE];
+	~Maze();
 
-		int init(Maze *maze);
+	void deinit(Maze *maze);
 
-		void deinit(Maze *maze);
+	void printTerrain(Maze *maze);
 
-		void printTerrain(Maze *maze);
-
-		void setTerrain(Maze *maze, int x, int y, const std::string& item);
+	void setTerrain(Maze *maze, int x, int y, const std::string& item);
 
 };
 

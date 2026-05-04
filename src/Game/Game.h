@@ -16,13 +16,9 @@ class GameClass{
 		INIT_FAILURE,
 		INIT_SUCCESS,
 		RUNNING
-
 	};
 
-
 	GameStatus init(GameClass *game);
-
-	void deinit(GameClass *game);
 
 	void run(GameClass *game);
 

@@ -17,7 +17,7 @@ int main(void) {
 	if (game->init(game) == GameClass::INIT_FAILURE) {
 
 		cout << "Game Init Failure" << endl;
-		game->deinit(game);
+
 		exit(1);
 	}
 
@@ -28,8 +28,6 @@ int main(void) {
 
 
 	game->maze->printTerrain(game->maze);
-
-	game->deinit(game);
 
 
     return 0;
