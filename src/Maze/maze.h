@@ -19,7 +19,7 @@ class Maze{
 		int width;
 		int height;
 
-		std::unique_ptr<Cell[]> terrain;
+		std::unique_ptr<Cell*[]> terrain;
 
 	public:
 

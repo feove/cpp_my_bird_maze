@@ -41,8 +41,9 @@ class Cell {
 
     public:
 
-    Cell(int x = 0, int y = 0, CellType type = CellType::EMPTY);
+    Cell();
 
+    Cell(int _x, int _y, CellType _type);
 
     CellType getType() const;
 

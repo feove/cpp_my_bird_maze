@@ -3,6 +3,14 @@
 #include "maze_unicode.h"
 #include <string>
 
+
+Cell::Cell() : x(0), y(0), type(CellType::EMPTY)
+{}
+
+Cell::Cell(int _x, int _y, CellType _type) : x(_x), y(_y), type(_type)
+{}
+
+
 CellType Cell::getType() const{
     return type;
 }
