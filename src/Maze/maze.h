@@ -29,6 +29,9 @@ class Maze{
 
 	~Maze();
 
+	int getWidth();
+
+	int getHeight();
 	//void deinit(Maze *maze);
 
 	void printBackend();

@@ -26,9 +26,31 @@ Maze::Maze(int _cx, int _cy, int _width, int _height){
 }
 
 
+int Maze::getWidth(){
+    return width;
+}
+
+int Maze::getHeight(){
+    return height;
+}
+
+bool corner_case(Maze *maze, int x, int y, CellType &type){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+
+    bool is_CTL = x % 4 == 0 && x == y && y < h/2;
+
+    if (is_CTL){
+        type = (x == 0) ? CellType::CORNER_TL : CellType::CORNER_RIGHT_DOWN;
+    }
+
+
+    return is_CTL;
+}
 
 void Maze::initMaze(Maze *maze){
-
 
     for (int y = 0; y < maze->height; y++) {
 
@@ -36,13 +58,10 @@ void Maze::initMaze(Maze *maze){
 
         for (int x = 0; x < maze->width; x++) {
 
-            if (y == 0){
+            CellType type = CellType::EMPTY;
+            if (corner_case(maze,x,y,type)) setTerrain(x, y, type);
 
-                setTerrain(x, y,CellType::WALL_HORIZONTAL);
-                continue;
-            }
-
-            setTerrain( x,y, CellType::EMPTY);
+            setTerrain(x, y, type);
         }
     }
 }
@@ -73,7 +92,10 @@ void Maze::printBackend(){
 
         for (int x = 0; x < width; x++) {
 
-            cout << "[" << terrain[y][x].getType(false) << "]";
+            std::string end = " "; // "|"
+            if( x == width - 1) end = "";
+
+            cout << terrain[y][x].getType(false) << end;
         }
 
         cout << endl;

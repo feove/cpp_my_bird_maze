@@ -36,22 +36,22 @@ void Cell::setPosition(int new_x, int new_y){
 
 std::string Cell::getType(bool unicode) const {
     switch (type) {
-        case CellType::EMPTY:             return unicode ? " " : "E";
-        case CellType::WALL_HORIZONTAL:   return  unicode ? "═" : "WH";
-        case CellType::WALL_VERTICAL:     return  unicode ? "║" : "WV";
-        case CellType::CORNER_TL:         return unicode ? "╔" : "CT";
+        case CellType::EMPTY:             return unicode ? " " : " E ";
+        case CellType::WALL_HORIZONTAL:   return  unicode ? "═" : "W_H";
+        case CellType::WALL_VERTICAL:     return  unicode ? "║" : "W_V";
+        case CellType::CORNER_TL:         return unicode ? "╔" : "CTL";
         case CellType::CORNER_TR:         return unicode ? "╗" : "CTR";
         case CellType::CORNER_BL:         return unicode ? "╚" : "CBL";
         case CellType::CORNER_BR:         return unicode ? "╝" : "CBB";
-        case CellType::TEE_UP:            return unicode ? "╩" : "TU";
-        case CellType::TEE_DOWN:          return unicode ? "╦" : "TD";
-        case CellType::TEE_LEFT:          return unicode ? "╣" : "TL";
-        case CellType::TEE_RIGHT:         return unicode ? "╠" : "TR";
-        case CellType::CROSS:             return unicode ? "╬" : "X";
-        case CellType::LINE_UP:           return unicode ? "╷" : "LU";
-        case CellType::LINE_DOWN:         return unicode ? "╵" : "LD";
-        case CellType::LINE_LEFT:         return unicode ? "╶" : "LL";
-        case CellType::LINE_RIGHT:        return unicode ? "╴" : "LR";
+        case CellType::TEE_UP:            return unicode ? "╩" : "T_U";
+        case CellType::TEE_DOWN:          return unicode ? "╦" : "T_D";
+        case CellType::TEE_LEFT:          return unicode ? "╣" : "T_L";
+        case CellType::TEE_RIGHT:         return unicode ? "╠" : "T_R";
+        case CellType::CROSS:             return unicode ? "╬" : " X ";
+        case CellType::LINE_UP:           return unicode ? "╷" : "L_U";
+        case CellType::LINE_DOWN:         return unicode ? "╵" : "L_D";
+        case CellType::LINE_LEFT:         return unicode ? "╶" : "L_L";
+        case CellType::LINE_RIGHT:        return unicode ? "╴" : "L_R";
         case CellType::CORNER_LEFT_UP:    return unicode ? "┘" : "CLU";
         case CellType::CORNER_RIGHT_UP:   return unicode ? "└" : "CRU";
         case CellType::CORNER_LEFT_DOWN:  return unicode ? "┐" : "CLD";
@@ -60,8 +60,8 @@ std::string Cell::getType(bool unicode) const {
         case CellType::TEE_DOWN_SINGLE:   return unicode ? "┬" : "TDS";
         case CellType::TEE_LEFT_SINGLE:   return unicode ? "┤" : "TLS";
         case CellType::TEE_RIGHT_SINGLE:  return unicode ? "├" : "TRS";
-        case CellType::CROSS_SINGLE:      return unicode ? "┼" : "CS";
-        case CellType::PLAYER:            return unicode ? "🐦" : "P";
+        case CellType::CROSS_SINGLE:      return unicode ? "┼" : "C_S";
+        case CellType::PLAYER:            return unicode ? "🐦" : " P ";
         default:                          return "?";
     }
 }
