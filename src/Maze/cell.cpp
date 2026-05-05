@@ -52,10 +52,10 @@ std::string Cell::getType(bool unicode) const {
         case CellType::LINE_DOWN:         return unicode ? "╵" : "L_D";
         case CellType::LINE_LEFT:         return unicode ? "╶" : "L_L";
         case CellType::LINE_RIGHT:        return unicode ? "╴" : "L_R";
-        case CellType::CORNER_LEFT_UP:    return unicode ? "┘" : "CLU";
-        case CellType::CORNER_RIGHT_UP:   return unicode ? "└" : "CRU";
-        case CellType::CORNER_LEFT_DOWN:  return unicode ? "┐" : "CLD";
-        case CellType::CORNER_RIGHT_DOWN: return unicode ? "┌" : "CRD";
+        case CellType::CORNER_BR_SINGLE:    return unicode ? "┘" : "CLU";
+        case CellType::CORNER_BL_SINGLE:   return unicode ? "└" : "CRU";
+        case CellType::CORNER_TR_SINGLE:  return unicode ? "┐" : "CLD";
+        case CellType::CORNER_TL_SINGLE: return unicode ? "┌" : "CRD";
         case CellType::TEE_UP_SINGLE:     return unicode ? "┴" : "TUS";
         case CellType::TEE_DOWN_SINGLE:   return unicode ? "┬" : "TDS";
         case CellType::TEE_LEFT_SINGLE:   return unicode ? "┤" : "TLS";

@@ -34,30 +34,51 @@ int Maze::getHeight(){
     return height;
 }
 
-bool is_inside(int x, int y,int wlimit,int hlimit){
+bool tl_area(Maze *maze,int x, int y){
 
-    return x < wlimit && y < hlimit;
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    return x == y  && x < w/2 && y < h/2;
 }
 
-bool are_zero(int x, int y){
-    return x == 0 && y == 0;
+bool tr_area(Maze *maze,int x, int y){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    return w-x == y && x > w/2 && y < h/2;
 }
 
-bool is_corner(Maze *maze,int x, int y, int wl, int hl, bool (*f)(int,int,int,int),CellType &type,CellType special,CellType normal){
+
+bool bl_area(Maze *maze,int x, int y){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    return x == h-y  && x < w/2 && y > h/2;
+}
 
 
-    bool is_Corner = x == 0 && y == 0;
+bool br_area(Maze *maze,int x, int y){
 
-    if (is_Corner){
-         type = special;
-         return true;
-    }
+    int w = maze->getWidth();
+    int h = maze->getHeight();
 
-    if (x == y && x % 2 == 0 &&  y % 2 == 0){
+    return w-x == h-y && x > w/2 && y > h/2;
+}
 
-        if ( f(x,y,wl,hl)){
+//Too much args
+bool is_corner(Maze *maze,int x, int y, bool (*f)(Maze *maze,int,int),CellType &type,CellType new_type){
 
-            type = normal;
+    if (type != CellType::EMPTY) return true;
+
+    if (x % 2 == 0 &&  y % 2 == 0){
+
+        if (f(maze,x,y)){
+
+            type = new_type;
+            return true;
         }
     }
 
@@ -69,7 +90,24 @@ bool corner_case(Maze *maze, int x, int y, CellType &type){
     int w = maze->getWidth();
     int h = maze->getHeight();
 
-    if (is_corner(maze, x, y, w/2, h/2, is_inside, type,CellType::CORNER_TL, CellType::CORNER_LEFT_DOWN)) return true;
+   //TOP LEFT CORNER
+    type = (x == 0 && y == 0) ? CellType::CORNER_TL : type;
+    if (is_corner(maze, x, y, tl_area, type, CellType::CORNER_TL_SINGLE)) return true;
+
+
+    //TOP RIGHT CORNER
+    type = (x == w-1 && y == 0) ? CellType::CORNER_TR : type;
+    if (is_corner(maze, x+1, y, tr_area, type, CellType::CORNER_TR_SINGLE)) return true;
+
+    //BOTTOM LEFT CORNER
+    type = (x == 0 && y == h-1) ? CellType::CORNER_BL : type;
+    if (is_corner(maze, x, y+1, bl_area, type, CellType::CORNER_BL_SINGLE)) return true;
+
+
+    //BOTTOM RIGHT CORNER
+    type = (x == w-1 && y == h-1) ? CellType::CORNER_BR : type;
+    if (is_corner(maze, x+1, y+1, br_area, type, CellType::CORNER_BR_SINGLE)) return true;
+
 
     return false;
 }
@@ -82,9 +120,13 @@ void Maze::initMaze(Maze *maze){
 
         for (int x = 0; x < maze->width; x++) {
 
-            CellType type = CellType::WALL_HORIZONTAL;
-            if (corner_case(maze,x,y,type)) setTerrain(x, y, type);
+            CellType type = CellType::EMPTY;
+            if (corner_case(maze,x,y,type)){
+                setTerrain(x, y, type);
+                continue;
+            }
 
+            type = CellType::WALL_HORIZONTAL;
             setTerrain(x, y, type);
         }
     }
