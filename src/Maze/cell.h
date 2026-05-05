@@ -16,6 +16,8 @@ enum class CellType {
     TEE_LEFT,
     TEE_RIGHT,
     CROSS,
+    LINE_VERTICAL,
+    LINE_HORIZONTAL,
     LINE_UP,
     LINE_DOWN,
     LINE_LEFT,

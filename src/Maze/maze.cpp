@@ -47,7 +47,7 @@ bool tr_area(Maze *maze,int x, int y){
     int w = maze->getWidth();
     int h = maze->getHeight();
 
-    return w-x == y && x > w/2 && y < h/2;
+    return w-y == x && x > w/2 && y < h/2;
 }
 
 
@@ -56,7 +56,7 @@ bool bl_area(Maze *maze,int x, int y){
     int w = maze->getWidth();
     int h = maze->getHeight();
 
-    return x == h-y  && x < w/2 && y > h/2;
+    return y == h-x  && x < w/2 && y > h/2;
 }
 
 
@@ -65,7 +65,7 @@ bool br_area(Maze *maze,int x, int y){
     int w = maze->getWidth();
     int h = maze->getHeight();
 
-    return w-x == h-y && x > w/2 && y > h/2;
+    return x == y && x > w/2 && y > h/2;
 }
 
 //Too much args
@@ -112,6 +112,25 @@ bool corner_case(Maze *maze, int x, int y, CellType &type){
     return false;
 }
 
+bool wall_case(Maze *maze,int x,int y,CellType &type){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    //HORIZONTAL WALLS
+    if (x != w-1 && x != 0 && y % 2 == 0){
+
+
+        if ((y < h/2 && x > y && x < w-y) || false){
+
+            type = (y == 0) ? CellType::WALL_HORIZONTAL : CellType::LINE_HORIZONTAL;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Maze::initMaze(Maze *maze){
 
     for (int y = 0; y < maze->height; y++) {
@@ -126,7 +145,12 @@ void Maze::initMaze(Maze *maze){
                 continue;
             }
 
-            type = CellType::WALL_HORIZONTAL;
+            if (wall_case(maze,x,y,type)){
+                setTerrain(x, y, type);
+                continue;
+            }
+
+            //type = CellType::WALL_HORIZONTAL;
             setTerrain(x, y, type);
         }
     }

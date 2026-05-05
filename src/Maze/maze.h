@@ -23,7 +23,7 @@ class Maze{
 
 	public:
 
-	Maze(int _cx, int _cy, int width = 32, int height = 16);
+	Maze(int _cx, int _cy, int width = 16, int height = 16);
 
 	void initMaze(Maze *maze);
 
