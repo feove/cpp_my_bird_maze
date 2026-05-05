@@ -34,20 +34,44 @@ int Maze::getHeight(){
     return height;
 }
 
+bool is_inside(int x, int y,int wlimit,int hlimit){
+
+    return x < wlimit && y < hlimit;
+}
+
+bool are_zero(int x, int y){
+    return x == 0 && y == 0;
+}
+
+bool is_corner(Maze *maze,int x, int y, int wl, int hl, bool (*f)(int,int,int,int),CellType &type,CellType special,CellType normal){
+
+
+    bool is_Corner = x == 0 && y == 0;
+
+    if (is_Corner){
+         type = special;
+         return true;
+    }
+
+    if (x == y && x % 2 == 0 &&  y % 2 == 0){
+
+        if ( f(x,y,wl,hl)){
+
+            type = normal;
+        }
+    }
+
+    return false;
+}
+
 bool corner_case(Maze *maze, int x, int y, CellType &type){
 
     int w = maze->getWidth();
     int h = maze->getHeight();
 
+    if (is_corner(maze, x, y, w/2, h/2, is_inside, type,CellType::CORNER_TL, CellType::CORNER_LEFT_DOWN)) return true;
 
-    bool is_CTL = x % 4 == 0 && x == y && y < h/2;
-
-    if (is_CTL){
-        type = (x == 0) ? CellType::CORNER_TL : CellType::CORNER_RIGHT_DOWN;
-    }
-
-
-    return is_CTL;
+    return false;
 }
 
 void Maze::initMaze(Maze *maze){
@@ -58,7 +82,7 @@ void Maze::initMaze(Maze *maze){
 
         for (int x = 0; x < maze->width; x++) {
 
-            CellType type = CellType::EMPTY;
+            CellType type = CellType::WALL_HORIZONTAL;
             if (corner_case(maze,x,y,type)) setTerrain(x, y, type);
 
             setTerrain(x, y, type);
