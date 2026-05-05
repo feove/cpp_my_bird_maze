@@ -112,7 +112,7 @@ bool corner_case(Maze *maze, int x, int y, CellType &type){
     return false;
 }
 
-bool wall_case(Maze *maze,int x,int y,CellType &type){
+bool horizontal_wall(Maze *maze,int x,int y,CellType &type){
 
     int w = maze->getWidth();
     int h = maze->getHeight();
@@ -127,13 +127,48 @@ bool wall_case(Maze *maze,int x,int y,CellType &type){
             return true;
         }
 
+         //BOTTOM
         if (y > h/2 && y > x && h-x-1 < y && y % 2 == 1){
 
             type = (y == h-1) ? CellType::WALL_HORIZONTAL : CellType::LINE_HORIZONTAL;
             return true;
         }
-
     }
+
+    return false;
+}
+
+bool vertical_walls(Maze *maze,int x,int y,CellType &type){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    //VERTICAL WALLS
+    if (y != h-1 && y != 0){
+
+        //LEFT
+        if (x < h/2 && y > x && x < w-y && x % 2 == 0){
+
+            type = (x == 0) ? CellType::WALL_VERTICAL : CellType::LINE_VERTICAL;
+            return true;
+        }
+
+        //RIGHT
+        if (x > h/2 && y < x && y > h-x-1 && x % 2 == 1){
+
+            type = (x == w-1) ? CellType::WALL_VERTICAL : CellType::LINE_VERTICAL;
+            return true;
+        }
+    }
+
+    return false;
+
+}
+bool wall_case(Maze *maze,int x,int y,CellType &type){
+
+    if (horizontal_wall(maze,x, y, type)) return true;
+
+    if (vertical_walls(maze, x,  y, type)) return true;
 
     return false;
 }
