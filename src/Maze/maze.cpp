@@ -211,7 +211,11 @@ void Maze::printTerrain(){
 
         for (int x = 0; x < width; x++) {
 
-            cout << terrain[y][x].getType(true);
+            std::string u = terrain[y][x].getType(true);
+
+            std::string res = ((x % 2 == 0 && x < width/2) || (x % 2 == 1 && x > width/2)) ? u : u+u+u+u;
+
+            cout << res;
         }
 
         cout << endl;
