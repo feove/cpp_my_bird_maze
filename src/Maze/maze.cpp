@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <type_traits>
 
 #include "maze.h"
 #include "../Game/Game.h"
@@ -8,7 +9,6 @@
 #include "maze_unicode.h"
 
 using namespace std;
-
 
 Maze::Maze(int _cx, int _cy, int _width, int _height){
 
@@ -22,22 +22,60 @@ Maze::Maze(int _cx, int _cy, int _width, int _height){
 
     terrain = std::make_unique<Cell*[]>(height);
 
-    for (int y = 0; y < height; y++) {
+    initMaze(this);
+}
 
-        terrain[y] = new Cell[width];
 
-        for (int x = 0; x < width; x++) {
 
-            terrain[y][x] = Cell(x, y, CellType::EMPTY);
+void Maze::initMaze(Maze *maze){
+
+
+    for (int y = 0; y < maze->height; y++) {
+
+        maze->terrain[y] = new Cell[maze->width];
+
+        for (int x = 0; x < maze->width; x++) {
+
+            if (y == 0){
+
+                setTerrain(x, y,CellType::WALL_HORIZONTAL);
+                continue;
+            }
+
+            setTerrain( x,y, CellType::EMPTY);
         }
     }
 }
 
-void Maze::setTerrain(Maze *maze, int x, int y, const string& item){
 
+void Maze::setTerrain(int x, int y, CellType type){
+
+    terrain[y][x] = Cell(x,y,type);
 }
 
 
-void Maze::printTerrain(Maze *maze){
+void Maze::printTerrain(){
 
+    for (int y = 0; y < height; y++) {
+
+        for (int x = 0; x < width; x++) {
+
+            cout << terrain[y][x].getType(true);
+        }
+
+        cout << endl;
+    }
+}
+
+void Maze::printBackend(){
+
+    for (int y = 0; y < height; y++) {
+
+        for (int x = 0; x < width; x++) {
+
+            cout << "[" << terrain[y][x].getType(false) << "]";
+        }
+
+        cout << endl;
+    }
 }

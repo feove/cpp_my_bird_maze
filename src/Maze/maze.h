@@ -25,13 +25,17 @@ class Maze{
 
 	Maze(int _cx, int _cy, int width = 32, int height = 16);
 
+	void initMaze(Maze *maze);
+
 	~Maze();
 
-	void deinit(Maze *maze);
+	//void deinit(Maze *maze);
 
-	void printTerrain(Maze *maze);
+	void printBackend();
 
-	void setTerrain(Maze *maze, int x, int y, const std::string& item);
+	void printTerrain();
+
+	void setTerrain(int x, int y, CellType type);
 
 };
 

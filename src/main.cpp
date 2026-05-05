@@ -21,14 +21,13 @@ int main(void) {
 		exit(1);
 	}
 
-	game->maze->printTerrain(game->maze);
-
 	//need loop
 	game->run(game);
 
 
-	game->maze->printTerrain(game->maze);
+	game->maze->printTerrain();
 
+	game->maze->printBackend();
 
     return 0;
 }

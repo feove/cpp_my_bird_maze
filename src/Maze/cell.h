@@ -47,14 +47,14 @@ class Cell {
 
     CellType getType() const;
 
+    std::string getType(bool unicode) const;
+
     int getX() const;
     int getY() const;
 
     void setType(CellType newType);
     void setPosition(int newX, int newY);
 
-
-    std::string getUnicode() const;
 
     bool operator==(const Cell& other) const;
 };
