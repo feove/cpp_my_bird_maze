@@ -118,14 +118,21 @@ bool wall_case(Maze *maze,int x,int y,CellType &type){
     int h = maze->getHeight();
 
     //HORIZONTAL WALLS
-    if (x != w-1 && x != 0 && y % 2 == 0){
+    if (x != w-1 && x != 0){
 
-
-        if ((y < h/2 && x > y && x < w-y) || false){
+        //TOP
+        if (y < h/2 && x > y && x < w-y && y % 2 == 0){
 
             type = (y == 0) ? CellType::WALL_HORIZONTAL : CellType::LINE_HORIZONTAL;
             return true;
         }
+
+        if (y > h/2 && y > x && h-x-1 < y && y % 2 == 1){
+
+            type = (y == h-1) ? CellType::WALL_HORIZONTAL : CellType::LINE_HORIZONTAL;
+            return true;
+        }
+
     }
 
     return false;
