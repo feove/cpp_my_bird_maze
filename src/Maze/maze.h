@@ -16,6 +16,9 @@ class Maze{
 		int cx; //frontend purposes
 		int cy;
 
+		int x;
+		int y;
+
 		int width;
 		int height;
 
@@ -23,11 +26,15 @@ class Maze{
 
 	public:
 
-	Maze(int _cx, int _cy, int width = 16, int height = 16);
+	Maze(int _cx, int _cy, int x = 0, int y = 0, int width = 16, int height = 16);
 
 	void initMaze(Maze *maze);
 
 	~Maze();
+
+	int getX();
+
+	int getY();
 
 	int getWidth();
 

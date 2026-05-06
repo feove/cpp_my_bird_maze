@@ -10,10 +10,39 @@
 
 using namespace std;
 
-Maze::Maze(int _cx, int _cy, int _width, int _height){
+struct WallContext {
+
+    Maze* maze;
+
+    int x;
+    int y;
+
+    CellType& type;
+};
+
+struct CornerContext : WallContext {
+
+    CellType new_type;
+
+    bool (*area_check)(Maze*, int, int);
+};
+
+
+int Maze::getX(){
+    return x;
+}
+
+int Maze::getY(){
+    return y;
+}
+
+Maze::Maze(int _cx, int _cy,int _x, int _y, int _width, int _height){
 
     cx = _cx;
     cy = _cy;
+
+    x = _x;
+    y = _y;
 
     width = _width;
     height = _height;
@@ -68,16 +97,15 @@ bool br_area(Maze *maze,int x, int y){
     return x == y && x > w/2 && y > h/2;
 }
 
-//Too much args
-bool is_corner(Maze *maze,int x, int y, bool (*f)(Maze *maze,int,int),CellType &type,CellType new_type){
+bool is_corner(const CornerContext& ctx) {
 
-    if (type != CellType::EMPTY) return true;
+    if (ctx.type != CellType::EMPTY) return true;
 
-    if (x % 2 == 0 &&  y % 2 == 0){
+    if (ctx.x % 2 == 0 && ctx.y % 2 == 0) {
 
-        if (f(maze,x,y)){
+        if (ctx.area_check(ctx.maze, ctx.x, ctx.y)) {
 
-            type = new_type;
+            ctx.type = ctx.new_type;
             return true;
         }
     }
@@ -85,37 +113,14 @@ bool is_corner(Maze *maze,int x, int y, bool (*f)(Maze *maze,int,int),CellType &
     return false;
 }
 
-bool corner_case(Maze *maze, int x, int y, CellType &type){
 
-    int w = maze->getWidth();
-    int h = maze->getHeight();
+bool horizontal_wall(WallContext& ctx){
 
-   //TOP LEFT CORNER
-    type = (x == 0 && y == 0) ? CellType::CORNER_TL : type;
-    if (is_corner(maze, x, y, tl_area, type, CellType::CORNER_TL_SINGLE)) return true;
-
-
-    //TOP RIGHT CORNER
-    type = (x == w-1 && y == 0) ? CellType::CORNER_TR : type;
-    if (is_corner(maze, x+1, y, tr_area, type, CellType::CORNER_TR_SINGLE)) return true;
-
-    //BOTTOM LEFT CORNER
-    type = (x == 0 && y == h-1) ? CellType::CORNER_BL : type;
-    if (is_corner(maze, x, y+1, bl_area, type, CellType::CORNER_BL_SINGLE)) return true;
-
-
-    //BOTTOM RIGHT CORNER
-    type = (x == w-1 && y == h-1) ? CellType::CORNER_BR : type;
-    if (is_corner(maze, x+1, y+1, br_area, type, CellType::CORNER_BR_SINGLE)) return true;
-
-
-    return false;
-}
-
-bool horizontal_wall(Maze *maze,int x,int y,CellType &type){
-
-    int w = maze->getWidth();
-    int h = maze->getHeight();
+    int w = ctx.maze->getWidth();
+    int h = ctx.maze->getHeight();
+    int x = ctx.x;
+    int y = ctx.y;
+    CellType& type = ctx.type;
 
     //HORIZONTAL WALLS
     if (x != w-1 && x != 0){
@@ -138,11 +143,13 @@ bool horizontal_wall(Maze *maze,int x,int y,CellType &type){
     return false;
 }
 
-bool vertical_walls(Maze *maze,int x,int y,CellType &type){
+bool vertical_walls(WallContext& ctx){
 
-    int w = maze->getWidth();
-    int h = maze->getHeight();
-
+    int w = ctx.maze->getWidth();
+    int h = ctx.maze->getHeight();
+    int x = ctx.x;
+    int y = ctx.y;
+    CellType& type = ctx.type;
     //VERTICAL WALLS
     if (y != h-1 && y != 0){
 
@@ -164,14 +171,71 @@ bool vertical_walls(Maze *maze,int x,int y,CellType &type){
     return false;
 
 }
-bool wall_case(Maze *maze,int x,int y,CellType &type){
 
-    if (horizontal_wall(maze,x, y, type)) return true;
+bool wall_cases(Maze *maze,int x,int y,CellType &type){
 
-    if (vertical_walls(maze, x,  y, type)) return true;
+    WallContext ctx{
+        maze,
+        x,
+        y,
+        type
+    };
+
+    if (horizontal_wall(ctx)) return true;
+
+    if (vertical_walls(ctx)) return true;
 
     return false;
 }
+
+
+bool corner_cases(Maze *maze, int x, int y, CellType &type){
+
+    int w = maze->getWidth();
+    int h = maze->getHeight();
+
+    CornerContext ctx{
+        maze,
+        x,
+        y,
+        type
+    };
+
+   //TOP LEFT CORNER
+    type = (x == 0 && y == 0) ? CellType::CORNER_TL : type;
+    ctx.new_type = CellType::CORNER_TL_SINGLE;
+    ctx.area_check = tl_area;
+    if (is_corner(ctx)) return true;
+
+
+    //TOP RIGHT CORNER
+    type = (x == w-1 && y == 0) ? CellType::CORNER_TR : type;
+    ctx.x = x+1;
+    ctx.new_type = CellType::CORNER_TR_SINGLE;
+    ctx.area_check = tr_area;
+    if (is_corner(ctx)) return true;
+
+    //BOTTOM LEFT CORNER
+    type = (x == 0 && y == h-1) ? CellType::CORNER_BL : type;
+    ctx.x = x;
+    ctx.y = y+1;
+    ctx.new_type = CellType::CORNER_BL_SINGLE;
+    ctx.area_check = bl_area;
+    if (is_corner(ctx)) return true;
+
+
+    //BOTTOM RIGHT CORNER
+    type = (x == w-1 && y == h-1) ? CellType::CORNER_BR : type;
+    ctx.x = x+1;
+    ctx.y = y+1;
+    ctx.new_type = CellType::CORNER_BR_SINGLE;
+    ctx.area_check = br_area;
+    if (is_corner(ctx)) return true;
+
+
+    return false;
+}
+
 
 void Maze::initMaze(Maze *maze){
 
@@ -181,13 +245,14 @@ void Maze::initMaze(Maze *maze){
 
         for (int x = 0; x < maze->width; x++) {
 
+
             CellType type = CellType::EMPTY;
-            if (corner_case(maze,x,y,type)){
-                setTerrain(x, y, type);
+            if (corner_cases(maze,x,y,type)){
+                setTerrain(x,y,type);
                 continue;
             }
 
-            if (wall_case(maze,x,y,type)){
+            if (wall_cases(maze,x,y,type)){
                 setTerrain(x, y, type);
                 continue;
             }
@@ -213,7 +278,10 @@ void Maze::printTerrain(){
 
             std::string u = terrain[y][x].getType(true);
 
-            std::string res = ((x % 2 == 0 && x < width/2) || (x % 2 == 1 && x > width/2)) ? u : u+u+u+u;
+            bool left_can_expend =  x % 2 == 0 && x < width/2;
+            bool right_can_expend = x % 2 == 1 && x > width/2;
+
+            std::string res = (left_can_expend || right_can_expend) ? u : u+u+u+u;
 
             cout << res;
         }
