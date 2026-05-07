@@ -10,6 +10,16 @@
 
 using namespace std;
 
+struct PrintContext {
+    int &x;
+    int &y;
+
+    int w;
+    int h;
+
+    Cell cell;
+};
+
 struct WallContext {
 
     Maze* maze;
@@ -270,23 +280,84 @@ void Maze::setTerrain(int x, int y, CellType type){
 }
 
 
+bool shouldDuplicate(CellType type) {
+
+    switch (type) {
+
+        case CellType::CORNER_TL:
+        case CellType::CORNER_TR:
+        case CellType::CORNER_BL:
+        case CellType::CORNER_BR:
+        case CellType::CORNER_TL_SINGLE:
+        case CellType::CORNER_TR_SINGLE:
+        case CellType::CORNER_BL_SINGLE:
+        case CellType::CORNER_BR_SINGLE:
+        case CellType::TEE_UP:
+        case CellType::TEE_DOWN:
+        case CellType::TEE_LEFT:
+        case CellType::TEE_RIGHT:
+        case CellType::CROSS:
+        case CellType::LINE_UP:
+        case CellType::LINE_DOWN:
+        case CellType::LINE_LEFT:
+        case CellType::LINE_RIGHT:
+        case CellType::TEE_UP_SINGLE:
+        case CellType::TEE_DOWN_SINGLE:
+        case CellType::TEE_LEFT_SINGLE:
+        case CellType::TEE_RIGHT_SINGLE:
+        case CellType::CROSS_SINGLE:
+        case CellType::PLAYER:
+        case CellType::WALL_VERTICAL:
+        case CellType::LINE_VERTICAL:
+            return false;
+
+
+        case CellType::EMPTY:
+        case CellType::WALL_HORIZONTAL:
+        case CellType::LINE_HORIZONTAL:
+        default:
+            return true;
+    }
+}
+
+void buildString(PrintContext ctx, string &line) {
+    string u = ctx.cell.getType(true);
+    CellType ct = ctx.cell.getType();
+
+    bool left_can_expend  = ctx.x % 2 == 0 && ctx.x < ctx.w / 2;
+    bool right_can_expend = ctx.x % 2 == 1 && ctx.x > ctx.w / 2;
+
+
+    if (!(left_can_expend || right_can_expend) && shouldDuplicate(ct)) {
+
+
+        line.append(u + u + u + u);
+
+    } else {
+        line.append(u);
+    }
+}
 void Maze::printTerrain(){
 
     for (int y = 0; y < height; y++) {
 
+        string line = "";
+
         for (int x = 0; x < width; x++) {
 
-            std::string u = terrain[y][x].getType(true);
+            PrintContext ctx{
+                x,
+                y,
+                width,
+                height,
+                terrain[y][x]
 
-            bool left_can_expend =  x % 2 == 0 && x < width/2;
-            bool right_can_expend = x % 2 == 1 && x > width/2;
+            };
 
-            std::string res = (left_can_expend || right_can_expend) ? u : u+u+u+u;
-
-            cout << res;
+            buildString(ctx, line);
         }
 
-        cout << endl;
+        cout << line << endl;
     }
 }
 

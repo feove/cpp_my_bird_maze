@@ -7,10 +7,10 @@ enum class CellType {
     EMPTY,
     WALL_HORIZONTAL,
     WALL_VERTICAL,
-    CORNER_TL,
+    CORNER_TL, //4
     CORNER_TR,
     CORNER_BL,
-    CORNER_BR,
+    CORNER_BR, //7
     TEE_UP,
     TEE_DOWN,
     TEE_LEFT,
@@ -22,10 +22,10 @@ enum class CellType {
     LINE_DOWN,
     LINE_LEFT,
     LINE_RIGHT,
-    CORNER_BL_SINGLE,
+    CORNER_BL_SINGLE, //19
     CORNER_BR_SINGLE,
     CORNER_TL_SINGLE,
-    CORNER_TR_SINGLE,
+    CORNER_TR_SINGLE, //22
     TEE_UP_SINGLE,
     TEE_DOWN_SINGLE,
     TEE_LEFT_SINGLE,
