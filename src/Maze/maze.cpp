@@ -271,6 +271,9 @@ void Maze::initMaze(Maze *maze){
             setTerrain(x, y, type);
         }
     }
+
+    setTerrain(7,2, CellType::DOOR);
+    setTerrain(2,7, CellType::DOOR);
 }
 
 
@@ -279,44 +282,20 @@ void Maze::setTerrain(int x, int y, CellType type){
     terrain[y][x] = Cell(x,y,type);
 }
 
+bool isDoor(CellType t){
+    return t == CellType::DOOR;
+}
 
 bool shouldDuplicate(CellType type) {
 
     switch (type) {
-
-        case CellType::CORNER_TL:
-        case CellType::CORNER_TR:
-        case CellType::CORNER_BL:
-        case CellType::CORNER_BR:
-        case CellType::CORNER_TL_SINGLE:
-        case CellType::CORNER_TR_SINGLE:
-        case CellType::CORNER_BL_SINGLE:
-        case CellType::CORNER_BR_SINGLE:
-        case CellType::TEE_UP:
-        case CellType::TEE_DOWN:
-        case CellType::TEE_LEFT:
-        case CellType::TEE_RIGHT:
-        case CellType::CROSS:
-        case CellType::LINE_UP:
-        case CellType::LINE_DOWN:
-        case CellType::LINE_LEFT:
-        case CellType::LINE_RIGHT:
-        case CellType::TEE_UP_SINGLE:
-        case CellType::TEE_DOWN_SINGLE:
-        case CellType::TEE_LEFT_SINGLE:
-        case CellType::TEE_RIGHT_SINGLE:
-        case CellType::CROSS_SINGLE:
-        case CellType::PLAYER:
-        case CellType::WALL_VERTICAL:
-        case CellType::LINE_VERTICAL:
-            return false;
-
-
         case CellType::EMPTY:
         case CellType::WALL_HORIZONTAL:
         case CellType::LINE_HORIZONTAL:
-        default:
             return true;
+
+        default:
+            return false;
     }
 }
 
@@ -329,11 +308,15 @@ void buildString(PrintContext ctx, string &line) {
 
 
     if (!(left_can_expend || right_can_expend) && shouldDuplicate(ct)) {
-
-
         line.append(u + u + u + u);
 
     } else {
+        if (isDoor(ct)){
+            line.append(u);
+            ctx.x++;
+            return;
+        }
+
         line.append(u);
     }
 }

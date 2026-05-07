@@ -67,6 +67,8 @@ std::string Cell::getType(bool unicode) const {
         case CellType::CROSS_SINGLE:      return unicode ? "┼" : "C_S";
 
         case CellType::PLAYER:            return unicode ? "🐦" : " P ";
+        case CellType::DOOR:              return unicode ? " " : " D ";
+
         default:                          return "?";
     }
 }

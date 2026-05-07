@@ -5,6 +5,7 @@
 
 enum class CellType {
     EMPTY,
+    DOOR,
     WALL_HORIZONTAL,
     WALL_VERTICAL,
     CORNER_TL, //4
